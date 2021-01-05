@@ -3,11 +3,22 @@ from PIL import Image
 
 class ImagePrimitive:
     def __init__(self, path):
-        self.__path = path
-        self.__image = tensorflow.keras.preprocessing.image.img_to_array(Image.open(self.__path))
-        self.__image = tensorflow.cast(self.__image, dtype=tensorflow.float32)
-        self.__input_image = None
-        self.__ratio = None
+        if path != 'tmp':
+            self.__path = path
+            self.__image = tensorflow.keras.preprocessing.image.img_to_array(Image.open(self.__path))
+            self.__image = tensorflow.cast(self.__image, dtype=tensorflow.float32)
+            self.__input_image = None
+            self.__ratio = None
+
+    @staticmethod
+    def from_request(image):
+        image_primitive = ImagePrimitive('tmp')
+        image_primitive.__path = 'tmp'
+        image_primitive.__image = tensorflow.keras.preprocessing.image.img_to_array(image)
+        image_primitive.__image = tensorflow.cast(image_primitive.__image, dtype=tensorflow.float32)
+        image_primitive.__input_image = None
+        image_primitive.__ratio = None
+        return image_primitive
 
     def get_raw(self):
         return self.__image
