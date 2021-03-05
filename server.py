@@ -35,11 +35,18 @@ def predict():
           detections = detector.predict(image.get_input_image())
           num_detections = int(detections.valid_detections[0])
           class_names = detector.get_class_names(detections)
-
           data["predictions"] = []
           data["totalObjectsFound"] = num_detections
+
+          boxes = detections.nmsed_boxes[0][:num_detections] / image.get_ratio()
+
+
           for detection in range(0, num_detections):
-              found = {"label": class_names[detection], 'probability': detections.nmsed_scores[0][detection] * 100}
+              found = {
+                  "label": class_names[detection],
+                  'probability': detections.nmsed_scores[0][detection] * 100,
+                  "box": boxes[detection].numpy().tolist()
+              }
               data["predictions"].append(found)
           data["success"] = True
     return flask.make_response(flask.jsonify(data), 200)

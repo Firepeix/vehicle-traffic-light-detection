@@ -9,7 +9,7 @@ def detect_in_image ():
     detector.load_dataset('data', 'coco/2017')
     detector.load_weights()
     detector.create_inference_model()
-    image = ImagePrimitive('Teste.jpg')
+    image = ImagePrimitive('1.jpeg')
     image.prepare_image()
     detections = detector.predict(image.get_input_image())
     num_detections = detections.valid_detections[0]
@@ -31,4 +31,4 @@ def train_neural_network():
     trainer.fit()
 
 if __name__ == '__main__':
-    pass
+    detect_in_image()

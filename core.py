@@ -114,7 +114,7 @@ class Detector:
     def create_inference_model(self):
         image = tensorflow.keras.Input(shape=[None, None, 3], name="image")
         predictions = self.__model(image, training=False)
-        detections = DecodePredictions(confidence_threshold=0.5)(image, predictions)
+        detections = DecodePredictions(confidence_threshold=0.26)(image, predictions)
         self.__inference_model = keras.Model(inputs=image, outputs=detections)
 
     def predict(self, image):
